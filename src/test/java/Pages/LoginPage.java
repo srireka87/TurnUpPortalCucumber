@@ -29,11 +29,8 @@ public class LoginPage
             WebElement hariHari = driver.findElement(By.xpath("//*[@id=\"logoutForm\"]/ul/li/a"));
 
            Assert.assertEquals(hariHari.getText(), "Hello hari!", "Login Unsuccessful");
-
-           
            
         }
-
 
     }
 

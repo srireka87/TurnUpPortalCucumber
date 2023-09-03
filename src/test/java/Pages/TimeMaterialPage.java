@@ -11,7 +11,7 @@ import org.testng.Assert;
 public class TimeMaterialPage
 
 {
-        public void CreateTimeRecord(WebDriver driver)
+    public void CreateTimeRecord(WebDriver driver)
         {
             //Click Create New Button
             WebElement createNewButton = driver.findElement(By.xpath("//*[@id=\"container\"]/p/a"));
@@ -44,13 +44,12 @@ public class TimeMaterialPage
             goToLastPage.click();
          
         }
-        public void CreateRecordActualDataAssertion(WebDriver driver)
-        { //select the last row of the records
-            WebElement actualData = driver.findElement(By.xpath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]"));
-            Assert.assertEquals(actualData.getText(),"Task7","Time & Material New Record is not Matching" );
-        }
-
-        public void EditRecord(WebDriver driver)
+    public String GetActualData(WebDriver driver)
+    { //select the last row of the records
+        WebElement actualData = driver.findElement(By.xpath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]"));
+        return actualData.getText();
+    }
+        public void EditRecord(WebDriver driver,String code,String description)
         {
             //click the last page arrow button
             Wait.WaitToBeVisible(driver, "XPath", "//*[@id=\"tmsGrid\"]/div[4]/a[4]/span",5);
@@ -75,12 +74,12 @@ public class TimeMaterialPage
             //Enter Code
             WebElement editCodeTextBox = driver.findElement(By.id("Code"));
             editCodeTextBox.clear();
-            editCodeTextBox.sendKeys("Java");
+            editCodeTextBox.sendKeys(code);
 
             //Enter Description
             WebElement editDescriptionTextBox = driver.findElement(By.id("Description"));
             editDescriptionTextBox.clear();
-            editDescriptionTextBox.sendKeys("Selenium");
+            editDescriptionTextBox.sendKeys(description);
 
             //Enter Price
             WebElement editPriceOverlappingTag = driver.findElement(By.xpath("//*[@id=\"TimeMaterialEditForm\"]/div/div[4]/div/span[1]/span/input[1]"));
@@ -102,19 +101,18 @@ public class TimeMaterialPage
 
         }
         //For the Code Validation ,Returning the Actual Code Data
-        public void EditedTMCodeAssertion(WebDriver driver)
+        public String GetEditedCode(WebDriver driver)
         {
             WebElement editedCodeActualData = driver.findElement(By.xpath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]"));
-             Assert.assertEquals(editedCodeActualData.getText(),"Java","Edited Time & Material Code is not matching");
+            return editedCodeActualData.getText();
         }
 
-        //For the Description Validation, returning the actual description data
-        public void EditedTMDescreptionAssertion(WebDriver driver)
-        {
-            WebElement editedDescreptionActualData = driver.findElement(By.xpath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[3]"));
-            Assert.assertEquals(editedDescreptionActualData.getText(), "Selenium","Edited TM Description is not matching");
-        }
-
+    //For the Description Validation, returning the actual description data
+    public String GetEditedDescrption(WebDriver driver)
+    {
+        WebElement editedDescrptionActualData = driver.findElement(By.xpath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[3]"));
+        return editedDescrptionActualData.getText();
+    }
         public void CloseTheDriver(WebDriver driver)
         {
             driver.quit();
@@ -140,11 +138,12 @@ public class TimeMaterialPage
                 alert.accept();
                 
             }
-             public void DeleteTMRecordAssertion(WebDriver driver)
-              {
-                  WebElement deletedActualData = driver.findElement(By.xpath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]"));
-                  System.out.println(deletedActualData.getText());
-                 Assert.assertEquals(deletedActualData.getText(),"Java","Expected TM Record Deleted Successfully");
-              }
-            
+    public String GetDeleteTMRecord(WebDriver driver)
+    {
+        WebElement deletedActualData = driver.findElement(By.xpath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]"));
+        return deletedActualData.getText();
     }
+
+}
+            
+
